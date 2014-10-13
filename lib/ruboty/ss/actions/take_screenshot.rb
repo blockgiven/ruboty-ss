@@ -15,9 +15,9 @@ module Ruboty
             return
           end
 
-          res = upload(image_file)
-          # TODO: build message from response
-
+          if url = upload(image_file)
+            message.reply("@#{message.from_name} #{url}")
+          end
         end
 
         def image_file
@@ -30,13 +30,17 @@ module Ruboty
         end
         memoize :image_file
 
+        def image_path
+          # TODO: extract to host/path/to/url/date.png
+          "#{Time.now.to_s}.png"
+        end
+
         def upload(image_file)
-          storage_class.new.upload(image_file, "#{Time.now.to_s}.png")
-          require 'pry'
+          storage_class.new.upload(image_file, image_path)
         end
 
         def storage
-          ENV['RUBOTY_SS_STORAGE'] || 'gist'
+          ENV['RUBOTY_SS_STORAGE'] || 'dropbox'
         end
 
         def storage_class

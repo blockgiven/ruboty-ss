@@ -1,4 +1,5 @@
 require "ruboty/ss/version"
+require "ruboty/ss/storage/dropbox"
 require "ruboty/ss/storage/gist"
 require "ruboty/ss/actions/take_screenshot"
 require "ruboty/handlers/ss"
