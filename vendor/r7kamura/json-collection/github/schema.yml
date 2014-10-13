@@ -1,0 +1,219 @@
+---
+"$schema": http://json-schema.org/draft-04/hyper-schema
+definitions:
+  user:
+    title: User
+    definitions:
+      name:
+        type:
+        - string
+        example: "r7kamura"
+  comment:
+    title: Comment
+    properties:
+      id:
+        "$ref": "#/definitions/comment/definitions/id"
+      url:
+        "$ref": "#/definitions/comment/definitions/url"
+      body:
+        "$ref": "#/definitions/comment/definitions/body"
+      created_at:
+        "$ref": "#/definitions/comment/definitions/created_at"
+      updated_at:
+        "$ref": "#/definitions/comment/definitions/updated_at"
+    definitions:
+      id:
+        type: integer
+        example: 1
+      url:
+        type: string
+        example: "https://api.github.com/gists/928ee253e79db4809168/comments/1"
+      body:
+        type: string
+        example: Just commenting for the sake of commenting
+      created_at:
+        type: string
+        format: date-time
+        example: "2011-04-18T23:23:56Z"
+      updated_at:
+        type: string
+        format: date-time
+        example: "2011-04-18T23:23:56Z"
+  commit:
+    title: Commit
+    properties:
+      url:
+        "$ref": "#/definitions/commit/definitions/url"
+      version:
+        "$ref": "#/definitions/commit/definitions/version"
+      committed_at:
+        "$ref": "#/definitions/commit/definitions/committed_at"
+    definitions:
+      url:
+        type: string
+        example: "https://api.github.com/gists/e49e8dbd1b30d170449c"
+      version:
+        type: string
+        example: 57a7f021a713b1c5a6a199b54cc514735d2d462f
+      committed_at:
+        type: string
+        format: date-time
+        example: "2010-04-14T02:15:15Z"
+  gist:
+    title: Gist
+    description: Gist object
+    type:
+    - object
+    required:
+    - id
+    definitions:
+      id:
+        description: Identifier of a gist
+        type:
+        - string
+        example: "1"
+      public:
+        description: "Indicates whether the gist is public. Default: `false`"
+        type:
+        - boolean
+        example: true
+      description:
+        description: the description for this gist
+        type:
+        - string
+        example: "description of gist"
+      files:
+        description: Files that make up this gist (used for both POST and PATCH)
+        type: object
+        example:
+          file1.txt:
+            content: updated file contents
+          old_name.txt:
+            filename: new_name.txt
+            content: modified contents
+          new_file.txt:
+            content: a new file
+          delete_this_file.txt: null
+    links:
+    - title: Show
+      description: Get a single gist
+      method: GET
+      href: "/gists/{(#/definitions/gist/definitions/id)}"
+      rel: show
+    - title: List
+      description: List the authenticated user's gists or if called anonymously, this will return all public gists
+      method: GET
+      href: "/gists"
+      rel: instances
+    - title: ListStarred
+      description: List the authenticated user’s starred gists
+      method: GET
+      href: "/gists/starred"
+      rel: instances
+    - title: ListUsers
+      description: List a user's gists
+      href: "/users/{(#/definitions/user/definitions/name)}/gists"
+      method: GET
+      rel: instances
+    - title: ListPublic
+      description: List public gists
+      href: "/gists/public"
+      method: GET
+      rel: instances
+    - title: Create
+      description: Create a gist
+      href: "/gists"
+      method: POST
+      rel: create
+      schema:
+        properties:
+          description:
+            "$ref": "#/definitions/gist/definitions/description"
+          public:
+            "$ref": "#/definitions/gist/definitions/public"
+          files:
+            "$ref": "#/definitions/gist/definitions/files"
+    - title: Update
+      description: Edit a gist
+      method: PATCH
+      href: "/gists/{(#/definitions/gist/definitions/id)}"
+      rel: update
+      schema:
+        type: object
+        properties:
+          description:
+            "$ref": "#/definitions/gist/definitions/description"
+          public:
+            "$ref": "#/definitions/gist/definitions/public"
+          files:
+            "$ref": "#/definitions/gist/definitions/files"
+    - title: Delete
+      description: Delete a gist
+      method: DELETE
+      href: "/gists/{(#/definitions/gist/definitions/id)}"
+      rel: delete
+    - title: ListCommits
+      description: List gist commits
+      method: GET
+      href: "/gists/{(#/definitions/gist/definitions/id)}/commits"
+      rel: instances
+      targetSchema:
+        $ref: "#/properties/commit"
+    - title: Star
+      description: Star a gist
+      method: PUT
+      href: "/gists/{(#/definitions/gist/definitions/id)}/star"
+      rel: update
+    - title: Unstar
+      description: Unstar a gist
+      method: DELETE
+      href: "/gists/{(#/definitions/gist/definitions/id)}/star"
+      rel: delete
+    - title: Starred
+      description: Check if a gist is starred
+      method: GET
+      href: "/gists/{(#/definitions/gist/definitions/id)}/star"
+      rel: show
+    - title: Fork
+      description: Fork a gist
+      method: POST
+      href: "/gists/{(#/definitions/gist/definitions/id)}/forks"
+      rel: create
+    - title: ListComments
+      description: List comments on a gist
+      method: GET
+      href: "/gists/{(#/definitions/gist/definitions/id)}/comments"
+      rel: instances
+      targetSchema:
+        "$ref": "#/properties/comment"
+    - title: CreateComment
+      description: Create a comment
+      method: POST
+      href: "/gists/{(#/definitions/gist/definitions/id)}/comments"
+      rel: create
+      targetSchema:
+        "$ref": "#/properties/comment"
+      schema:
+        type: object
+        properties:
+          body:
+            "$ref": "#/definitions/comment/definitions/body"
+    properties:
+      id:
+        "$ref": "#/definitions/gist/definitions/id"
+properties:
+  gist:
+    "$ref": "#/definitions/gist"
+  commit:
+    "$ref": "#/definitions/commit"
+  comment:
+    "$ref": "#/definitions/comment"
+  user:
+    "$ref": "#/definitions/user"
+type:
+- object
+description: GitHub API v3
+links:
+- href: https://api.github.com
+  rel: self
+title: GitHub API v3
