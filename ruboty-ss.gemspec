@@ -18,6 +18,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_runtime_dependency "dropbox-sdk"
+  spec.add_runtime_dependency "gyazo"
   spec.add_runtime_dependency "jsonism"
   spec.add_runtime_dependency "mem"
   spec.add_runtime_dependency "ruboty"

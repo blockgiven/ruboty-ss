@@ -8,8 +8,8 @@ module Ruboty
       class Dropbox
         include Mem
 
-        def upload(image_file, path)
-          response = client.put_file(path, image_file)
+        def upload(image_file, options)
+          response = client.put_file(options[:path], image_file)
           sleep 0.5 # FIXME
           shares = client.shares(response['path'])
           sleep 0.5 # FIXME

@@ -22,6 +22,19 @@ Or install it yourself as:
 
     @ruboty ss http://example.com/
 
+## Where screenshots go?
+
+[Gyazo](https://gyazo.com/ja).
+
+### How to save screenshots in Dropbox
+
+You need to get Dropbox access token:
+
+https://www.dropbox.com/developers/core/start/ruby
+
+    RUBOTY_SS_STORAGE=dropbox RUBOTY_SS_DROPBOX_ACCESS_TOKEN=<YOUR_ACCESS_TOKEN> bundle exec ruboty
+
+
 ## Contributing
 
 1. Fork it ( https://github.com/blockgiven/ruboty-ss/fork )

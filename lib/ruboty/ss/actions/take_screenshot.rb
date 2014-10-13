@@ -36,11 +36,11 @@ module Ruboty
         end
 
         def upload(image_file)
-          storage_class.new.upload(image_file, image_path)
+          storage_class.new.upload(image_file, path: image_path)
         end
 
         def storage
-          ENV['RUBOTY_SS_STORAGE'] || 'dropbox'
+          ENV['RUBOTY_SS_STORAGE'] || 'gyazo'
         end
 
         def storage_class
