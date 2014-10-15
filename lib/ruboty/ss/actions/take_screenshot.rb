@@ -11,12 +11,12 @@ module Ruboty
 
         def call
           unless image_file
-            message.reply("@#{message.from_name} スクショとれなかったっしょ")
+            message.reply("スクショとれなかったっしょ")
             return
           end
 
           if url = upload(image_file)
-            message.reply("@#{message.from_name} #{url}")
+            message.reply(url)
           end
         end
 
